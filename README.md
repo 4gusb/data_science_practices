@@ -1,1 +1,1 @@
-# sql_practices_2
+# sql_practices_
