@@ -82,5 +82,6 @@ plt.show()
 jointplot = sns.jointplot(x='PER CAPITA INCOME', y="PERCENT AGED 16+ UNEMPLOYED", data=df)
 plt.show()
 
-# The higher per capita incomes are, the less 16+ unemployees there are.
+# The higher per capita incomes are, the less 16+ unemployees there are. So, there are much more chances to be unemployed when the per capita incomes are low.
+
 --
