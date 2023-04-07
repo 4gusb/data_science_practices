@@ -60,12 +60,14 @@ print(df)
 
 # Problem 6: Use a sub-query to determine the Community Area Name with most number of crimes.
 
-df = pd.read_sql("SELECT COUNT(COMMUNITY_AREA_NUMBER) as TOTAL, COMMUNITY_AREA_NUMBER, `COMMUNITY AREA NAME`\
-                    FROM crime_chicago CRIME, census_chicago CENSUS\
-                    WHERE `COMMUNITY AREA NUMBER` = COMMUNITY_AREA_NUMBER\
-                    GROUP BY COMMUNITY_AREA_NUMBER, `COMMUNITY AREA NAME`\
-                    ORDER BY TOTAL DESC\
-                    LIMIT 1", conn)
+df = pd.read_sql("SELECT *\
+                  FROM (SELECT COUNT(COMMUNITY_AREA_NUMBER) as TOTAL, COMMUNITY_AREA_NUMBER, `COMMUNITY AREA NAME`\
+                        FROM crime_chicago CRIME, census_chicago CENSUS\
+                        WHERE `COMMUNITY AREA NUMBER` = COMMUNITY_AREA_NUMBER\
+                        GROUP BY COMMUNITY_AREA_NUMBER, `COMMUNITY AREA NAME`\
+                        ORDER BY TOTAL DESC\
+                        LIMIT 1) t1"\
+                 , conn)
 print(df)
 
 --
