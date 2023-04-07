@@ -48,7 +48,7 @@ df = pd.read_sql("SELECT DISTINCT(PRIMARY_TYPE)\
 print(df)
 
 
-# Problem 5: Which community area is most crime prone?
+# Problem 5: Which community area number is most crime prone?
 
 df = pd.read_sql("SELECT COUNT(COMMUNITY_AREA_NUMBER) as TOTAL_CASES, COMMUNITY_AREA_NUMBER\
                   FROM crime_chicago\
