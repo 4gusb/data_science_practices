@@ -13,7 +13,6 @@ try:
 except:
     print("Error")
 
-
 # ----------------------------------------------------------------
 #TABLES CREATION
 
@@ -49,8 +48,8 @@ conn.commit()
 
 # Retrieve all records from the table
 
-# df = pd.read_sql("SELECT * FROM shoe_shop", conn)
-# print(df)
+df = pd.read_sql("SELECT * FROM shoe_shop", conn)
+print(df)
 
 
 # Creation of Bank Table
@@ -85,17 +84,16 @@ conn.commit()
 
 # Retrieve all records from the table
 
-# df = pd.read_sql("SELECT * FROM bank_accounts", conn)
-# print(df)
+df = pd.read_sql("SELECT * FROM bank_accounts", conn)
+print(df)
 
 
 # ----------------------------------------------------------------
 # PROCEDURE AND TRANSACTION
 
-
 # Drop procedure in case it exists
 
-cursor.execute("DROP PROCEDURE transaction")
+cursor.execute("DROP PROCEDURE IF EXISTS transaction")
 print("Procedure dropped")
 
 # Starts procedure
@@ -154,7 +152,7 @@ print(shop)
 
 
 # ----------------------------------------------------------------
-# SECOND TRY OF PROCEDURE AND TRANSACTION
+# SECOND PROCEDURE AND TRANSACTION
 
 
 # Drop procedure because it already exists
@@ -164,7 +162,7 @@ print("Procedure dropped")
 
 
 # Starts procedure
-# Now, the exact same work will be executed plus another purchase attempt, which will raise an exception due Rose's insufficient funds.
+# Now another purchase attempt will be executed, which will raise an exception due Rose's insufficient funds.
 
 cursor.execute("CREATE PROCEDURE transaction()\
                 BEGIN\
@@ -173,18 +171,6 @@ cursor.execute("CREATE PROCEDURE transaction()\
                         SET `rollback` = 1;\
                         \
                         START TRANSACTION;\
-                        \
-                        UPDATE bank_accounts\
-                        SET Balance = Balance - 200\
-                        WHERE AccountName = 'Rose';\
-                        \
-                        UPDATE bank_accounts\
-                        SET Balance = Balance + 200\
-                        WHERE AccountName = 'Shoe Shop';\
-                        \
-                        UPDATE shoe_shop\
-                        SET Stock = Stock - 1\
-                        WHERE Product = 'Boots';\
                         \
                         UPDATE bank_accounts\
                         SET Balance = Balance - 300\
@@ -209,7 +195,6 @@ cursor.execute("CREATE PROCEDURE transaction()\
 conn.commit()
 print("Procedure created")
 
-
 # Call procedure
 
 cursor.execute("CALL transaction")
@@ -226,7 +211,6 @@ shop = pd.read_sql("SELECT *\
                 FROM shoe_shop"\
                 , conn)
 print(shop)
-
 
 # Here no data was modified since there was at least one exception during this transaction.
 
